@@ -1,11 +1,7 @@
 """
 Class to work with txt files
 
-Hangman game by Fredy Izquierdo
-
-Github: https://github.com/faidrn
-Twitter: https://twitter.com/_FAID__
-Website: https://faidrn.github.io/hello-world/
+return an array with the words into the text file
 """
 
 class Files():
@@ -49,6 +45,7 @@ def run():
     print(file.read())
     # file.write()
     # file.write_in_new_line()
+    # https://github.com/kying18/hangman
 
 
 if __name__ == '__main__':
