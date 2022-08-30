@@ -18,28 +18,59 @@ class Game():
         file = Files('./words.txt')
         # Obtener la lista de palabras
         self.listOfWords = file.read()
+        # Variable global
+        self.underlines: str = ''
         # Imprimir la horca
         print(gallow[0])
         self.word = self.get_random_word()
 
 
     def get_random_word(self) -> str:
-        # Obtener una palabra de forma aleatoria
+        # Method Obtener una palabra de forma aleatoria
         random_word = random.choice(self.listOfWords)
 
         # Retornar la palabra en mayúsculas
         return random_word.upper()
 
     
-    def turn_word_in_underlines(self):
-        underlines = '_ ' * len(self.word)
+    def turn_word_in_underlines(self) -> str:
+        # Metodo para generar la cadena de underlines (_) para imprimir en pantalla
+        # self.underlines = '_ ' * len(self.word)
 
-        print(underlines)
+        print(self.word)
+        # return self.underlines
+        return '_ ' * len(self.word)
+
+    
+    def compare_letters(self, underlines, letter_selected):
+        # Metodo para comparar la letra seleccionada con las letras de la palabra
+        # underlines_list = []
+        # for underline in underlines:
+        #     underlines_list.append(underline)
+        # Aplicando list comprehensions
+        underlines_list = [underline for underline in self.underlines if underline != ' ']
+
+        for letter in self.word:
+            if letter_selected == letter:
+                self.underlines = f'{self.underlines}{letter} '
+            else:
+                self.underlines = f'{self.underlines}_ '
+        
+        print(underlines_list)
+        print(self.underlines)
+
+
+
     
 
 def run():
     play = Game()
-    play.turn_word_in_underlines()
+    ul = play.turn_word_in_underlines()
+    print(ul)
+    lett = input('Letra: ')
+    play.compare_letters('', lett.upper())
+    lett = input('Letra: ')
+    play.compare_letters('', lett.upper())
 
 if __name__ == '__main__':
     run()
