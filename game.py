@@ -3,12 +3,15 @@ Class with the logic game
 
 """
 
+from operator import truediv
 from title_game import title_game as tg
 from screens_hangman import screens_dict as gallow
 from files import Files
 import random
-# Libreria para usar funciones de la consola
+# Framework to use terminal functions
 import os
+from time import sleep
+
 
 class Game():
 
@@ -16,19 +19,14 @@ class Game():
     def __init__(self):
         self.title = tg()
         print(self.title)
-        # Leer el archivo txt
+        # Read the txt file
         file = Files('./words.txt')
         # file = Files('/Users/macbook/Documents/Projects/python/hangman-game-py/words.txt')
-        # Obtener la lista de palabras
+        # Get the list of words
         self.listOfWords = file.read()
-        # Variable global
-        self.underlines = []
-        # Imprimir la horca
-        print(gallow[0])
-        self.word = self.get_random_word()
-        # Variable auxiliar para saber si ha adivinado o no una letra
+        # Variable to know if player guess the letter
         self.guessTheLetter: bool = False
-        # Variables para llevar los puntos a favor y en contra
+        # Variables to show the scores
         self.wrongScore: int = 0
         self.successScore: int = 0
         # Number of bad answers
@@ -37,31 +35,32 @@ class Game():
         self.numberOfCorrectAnswers: int = 0
         # Position the screen into the screens_dict 
         self.screenNumber = 1
-
+        
 
     def get_random_word(self) -> str:
         # Method Obtener una palabra de forma aleatoria
         random_word = random.choice(self.listOfWords)
 
-        # Retornar la palabra en mayúsculas
+        # Return the capitalized word
         return random_word.upper()
 
     
     def turn_word_in_underlines(self) -> str:
-        # Metodo para generar la cadena de underlines (_) para imprimir en pantalla
-        # Aplicando list comprehensions
+        # Method to get the underlines string (_) to print in screen
+        # Apply list comprehensions
         self.underlines = ['_' for i in range(len(self.word))]
 
-        print(self.word)
+        print(" ".join(self.underlines))
         return self.underlines
-        # return '_ ' * len(self.word)
 
     
     def compare_letters(self, letter_selected) -> bool:
-        # Metodo para comparar la letra seleccionada con las letras de la palabra
+        # Method to compare the selected letter with the letters of the word
+        # Variable to keep the loop to type the letters
+        continue_loop = True
+
         for i in range(len(self.word)):
             if letter_selected == self.word[i]:
-                # underlines_list[i] = letter_selected
                 self.underlines[i] = letter_selected
                 self.guessTheLetter = True
                 self.numberOfCorrectAnswers += 1
@@ -72,22 +71,32 @@ class Game():
             self.drawing_hangman()
             self.numberOfBadAnswers += 1
 
-        # Mostrar mensaje de perdiste
-        # 6 partes del cuerpo
+        self.guessTheLetter = False
+
+        # Show messages if player win or not
+        # 6 screens of the hangman
         if self.numberOfBadAnswers == 6:
-            # Agregar la palabra al mensaje
             print(f'Perdiste!. La palabra era {self.word}')
 
             self.wrongScore += 1
+            continue_loop = False
+            self.print_scores()
         else:
-            # Mostrar el mensaje de ganaste
+            # Message if player win
             if self.numberOfCorrectAnswers == len(self.word):
                 print(f'Felicidades! Has adivinado la palabra')
                 self.successScore += 1
+                continue_loop = False
+                self.print_scores()
 
-        self.guessTheLetter = False
 
-        return True
+        return continue_loop
+
+
+    def print_scores(self):
+        # Method to print the scores
+        print(f'Aciertos: {self.successScore}')
+        print(f'Desaciertos: {self.wrongScore}')
 
 
     def drawing_hangman(self):
@@ -97,7 +106,10 @@ class Game():
 
 
     def game_start(self):
-        # Method tho reset the board and variables
+        # Method to clean the board and reset the variables
+
+        # Wait 2 seconds to clean the screen
+        sleep(2)
         # Clear the terminal
         self.clear()
 
@@ -106,50 +118,50 @@ class Game():
         self.numberOfBadAnswers = 0
         self.numberOfCorrectAnswers = 0
 
+        print(gallow[0])
+        self.word = self.get_random_word()
+        self.underlines = self.turn_word_in_underlines()
+
 
     def game_over(self):
         # Method to ask about a new game
         play_again = input('Continuar jugando [s/n]: ')
 
-        if (play_again == 's'):
-            self.game_start()
-            self.get_random_word()
-            # pendiente agregar la forma de que el juego se inicie(equivalente a desbloquear botones)
-        else:
-            return
+        return play_again
 
 
 
-    def clear():
-        if os.name == "nt":
-            os.system("cls")
-        else:
-            os.system("clear")
+    def clear(self):
+        # Method to clean the terminal
+        command = 'clear'
+        if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
+            command = 'cls'
+        os.system(command)
 
 
 
     
 
-def run():
-    play = Game()
-    ul = play.turn_word_in_underlines()
-    print(" ".join(ul))
-    lett = input('Letra: ')
-    play.compare_letters(lett.upper())
-    lett = input('Letra: ')
-    play.compare_letters(lett.upper())
-    lett = input('Letra: ')
-    play.compare_letters(lett.upper())
-    lett = input('Letra: ')
-    play.compare_letters(lett.upper())
-    lett = input('Letra: ')
-    play.compare_letters(lett.upper())
-    lett = input('Letra: ')
-    play.compare_letters(lett.upper())
-    lett = input('Letra: ')
-    play.compare_letters(lett.upper())
-    lett = input('Letra: ')
-    play.compare_letters(lett.upper())
+# def run():
+#     play = Game()
+#     ul = play.turn_word_in_underlines()
+#     print(" ".join(ul))
+#     lett = input('Letra: ')
+#     play.compare_letters(lett.upper())
+#     lett = input('Letra: ')
+#     play.compare_letters(lett.upper())
+#     lett = input('Letra: ')
+#     play.compare_letters(lett.upper())
+#     lett = input('Letra: ')
+#     play.compare_letters(lett.upper())
+#     lett = input('Letra: ')
+#     play.compare_letters(lett.upper())
+#     lett = input('Letra: ')
+#     play.compare_letters(lett.upper())
+#     lett = input('Letra: ')
+#     play.compare_letters(lett.upper())
+#     lett = input('Letra: ')
+#     play.compare_letters(lett.upper())
 
-if __name__ == '__main__':
-    run()
+# if __name__ == '__main__':
+#     run()
