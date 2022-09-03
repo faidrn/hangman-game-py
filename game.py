@@ -3,7 +3,6 @@ Class with the logic game
 
 """
 
-from operator import truediv
 from title_game import title_game as tg
 from screens_hangman import screens_dict as gallow
 from files import Files
@@ -38,7 +37,7 @@ class Game():
         
 
     def get_random_word(self) -> str:
-        # Method Obtener una palabra de forma aleatoria
+        # Method to get a random word from the words list
         random_word = random.choice(self.listOfWords)
 
         # Return the capitalized word
@@ -137,31 +136,3 @@ class Game():
         if os.name in ('nt', 'dos'):  # If Machine is running on Windows, use cls
             command = 'cls'
         os.system(command)
-
-
-
-    
-
-# def run():
-#     play = Game()
-#     ul = play.turn_word_in_underlines()
-#     print(" ".join(ul))
-#     lett = input('Letra: ')
-#     play.compare_letters(lett.upper())
-#     lett = input('Letra: ')
-#     play.compare_letters(lett.upper())
-#     lett = input('Letra: ')
-#     play.compare_letters(lett.upper())
-#     lett = input('Letra: ')
-#     play.compare_letters(lett.upper())
-#     lett = input('Letra: ')
-#     play.compare_letters(lett.upper())
-#     lett = input('Letra: ')
-#     play.compare_letters(lett.upper())
-#     lett = input('Letra: ')
-#     play.compare_letters(lett.upper())
-#     lett = input('Letra: ')
-#     play.compare_letters(lett.upper())
-
-# if __name__ == '__main__':
-#     run()

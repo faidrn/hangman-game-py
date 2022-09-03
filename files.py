@@ -15,15 +15,13 @@ class Files():
 
         with open(self.path_file, "r", encoding="utf-8") as f:
             for line in f:
-                # .rstrip('\n') elimina el retorno de carro o salto de linea
+                # .rstrip('\n') remove carriage return or line feed
                 content_file.append(line.rstrip('\n'))
             
         return content_file
 
 
     def write(self, arr):
-        # arr = ["Nicolás", "Miguel", "Pepe", "Christian", "Rocío"]
-
         with open(self.path_file, "w", encoding="utf-8") as f:
             for element in arr:
                 f.write(element)
@@ -31,22 +29,7 @@ class Files():
 
 
     def write_in_new_line(self, arr):
-        # arr = ["Facundo", "Miguel", "Pepe", "Christian", "Rocío"]
-        # arr = ["María", "Fernanda"]
-
         with open(self.path_file, "a", encoding="utf-8") as f:
             for element in arr:
                 f.write(element)
                 f.write("\n")
-
-
-def run():
-    file = Files('./words.txt')
-    print(file.read())
-    # file.write()
-    # file.write_in_new_line()
-    # https://github.com/kying18/hangman
-
-
-if __name__ == '__main__':
-    run()
