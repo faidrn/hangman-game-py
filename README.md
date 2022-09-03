@@ -24,7 +24,8 @@ Just in case you don't know, in this game, we have to figure out a secret word b
     --------
 
 
-Classes (Underline)
+### Classes
+----
 
 Words list:
 In the `files.py`, create **Files class** and its methods as described below.
