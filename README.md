@@ -25,7 +25,6 @@ Just in case you don't know, in this game, we have to figure out a secret word b
 
 
 ### Classes
-                
 ----
 
 Words list:
